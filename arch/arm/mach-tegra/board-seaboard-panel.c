@@ -640,7 +640,7 @@ int __init picasso_panel_init(void)
 }
 #endif
 
-#ifdef CONFIG_MACH_TF101
+#ifdef CONFIG_MACH_PICASSO
 int __init tf101_panel_init(void)
 {
 	seaboard_panel_gpio_init();

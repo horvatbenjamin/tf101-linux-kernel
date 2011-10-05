@@ -250,8 +250,10 @@ static void __init picasso_touch_init(void) {
 	gpio_set_value(TEGRA_GPIO_VENTANA_TS_RST, 1);
 	msleep(100);
 
-	if(machine_is_picasso())
-		i2c_register_board_info(0, &mxt_device_picasso, 1);
+	if(machine_is_picasso()){
+//		i2c_register_board_info(0, &mxt_device_picasso, 1);
+		i2c_register_board_info(0, &mxt_device_tf101, 1);
+		}
 
 	if(machine_is_tf101())
 		i2c_register_board_info(0, &mxt_device_tf101, 1);
@@ -476,8 +478,10 @@ static void __init picasso_sensors_init(void) {
 	gpio_request(TEGRA_GPIO_NCT1008_THERM2_IRQ, "nct1008");
 	gpio_direction_input(TEGRA_GPIO_NCT1008_THERM2_IRQ);
 	
-	if(machine_is_picasso())
-		i2c_register_board_info(2, &picasso_ec, 1);
+	if(machine_is_picasso()){
+//		i2c_register_board_info(2, &picasso_ec, 1);
+		i2c_register_board_info(2, tf101_asusec, ARRAY_SIZE(tf101_asusec));
+		}
 
 	if(machine_is_tf101())
 		i2c_register_board_info(2, tf101_asusec, ARRAY_SIZE(tf101_asusec));
@@ -683,8 +687,10 @@ static void __init tegra_picasso_init(void)
 	picasso_regulator_init();
 	picasso_usb_init();
 
-	if(machine_is_picasso())
-		picasso_panel_init();
+	if(machine_is_picasso()){
+		tf101_panel_init();
+//		picasso_panel_init();
+		}
 
 	if(machine_is_tf101())
 		tf101_panel_init();
