@@ -583,7 +583,7 @@ static void mxt_input_touchevent(struct mxt_data *data,
 		return;
 
 	x = (message->message[1] << 4) | ((message->message[3] >> 4) & 0xf);
-	y = (message->message[2] << 4) | ((message->message[3] & 0xf));
+	y = 1280 - (message->message[2] << 4) | ((message->message[3] & 0xf));	// Fix touchscreen reverse bug	
 	if (data->max_x < 1024)
 		x = x >> 2;
 	if (data->max_y < 1024)

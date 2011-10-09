@@ -368,9 +368,14 @@ static struct i2c_board_info __initdata wm8903_device = {
 	.platform_data = &picasso_wm8903_pdata,
 };
 
+static const struct i2c_board_info fm34_dsp = {
+	I2C_BOARD_INFO("dsp_fm34", 0x60)
+};
+
 static void __init picasso_sound_init(void) {
 	i2c_register_board_info(0, &wm8903_device, 1);
 	platform_device_register(&picasso_audio_device);
+	i2c_register_board_info(0, &fm34_dsp, 1);
 }
 
 /******************************************************************************
@@ -519,13 +524,6 @@ static struct gpio_keys_button picasso_keys[] = {
 		.debounce_interval = 10,
 	},
 	{
-		.code = KEY_POWER,
-		.gpio = PICASSO_GPIO_KEY_POWER2,
-		.desc = "Power Key 2",
-		.type = EV_KEY,
-		.debounce_interval = 10,
-	},
-	{
 		.code = SW_RFKILL_ALL,
 		.gpio = PICASSO_GPIO_SWITCH_LOCK,
 		.desc = "Lock Switch",
@@ -611,10 +609,14 @@ static struct tegra_suspend_platform_data picasso_suspend_data = {
 	.separate_req = true,
 	.corereq_high = false,
 	.sysclkreq_high = true,
+//	.wake_enb =
+//		TEGRA_WAKE_GPIO_PV3 | TEGRA_WAKE_GPIO_PC7 | TEGRA_WAKE_USB1_VBUS |
+//		TEGRA_WAKE_GPIO_PV2 | TEGRA_WAKE_GPIO_PS0,
 	.wake_enb =
-		TEGRA_WAKE_GPIO_PV3 | TEGRA_WAKE_GPIO_PC7 | TEGRA_WAKE_USB1_VBUS |
+		TEGRA_WAKE_GPIO_PV3 | TEGRA_WAKE_USB1_VBUS |
 		TEGRA_WAKE_GPIO_PV2 | TEGRA_WAKE_GPIO_PS0,
-	.wake_high = TEGRA_WAKE_GPIO_PC7,
+//	.wake_high = TEGRA_WAKE_GPIO_PC7,
+	.wake_high = 0,
 	.wake_low = TEGRA_WAKE_GPIO_PV2,
 	.wake_any =
 		TEGRA_WAKE_GPIO_PV3 | TEGRA_WAKE_USB1_VBUS | TEGRA_WAKE_GPIO_PS0,
